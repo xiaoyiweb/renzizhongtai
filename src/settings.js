@@ -1,6 +1,6 @@
 module.exports = {
 
-  title: '人资中台', // 标题
+  title: '江西赚它一个亿科技股份有限公司', // 标题
 
   /**
    * @type {boolean} true | false
@@ -12,5 +12,5 @@ module.exports = {
    * @type {boolean} true | false
    * @description Whether show the logo in sidebar
    */
-  sidebarLogo: false // 是否显示图标LOGO
+  sidebarLogo: true // 是否显示图标LOGO
 }

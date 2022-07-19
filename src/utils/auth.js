@@ -1,15 +1,24 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'vue_admin_template_token'
+const token = 'renzi'
+const timekey = 'timestamp-key'
 
-export function getToken() {
-  return Cookies.get(TokenKey)
+export function getToken () {
+  return Cookies.get(token)
 }
 
-export function setToken(token) {
-  return Cookies.set(TokenKey, token)
+export function setToken (val) {
+  return Cookies.set(token, val)
 }
 
-export function removeToken() {
-  return Cookies.remove(TokenKey)
+export function removeToken () {
+  return Cookies.remove(token)
+}
+
+export function setTime () {
+  return Cookies.set(timekey, Date.now())
+}
+
+export function getTime () {
+  return Cookies.get(timekey)
 }
