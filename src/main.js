@@ -22,6 +22,15 @@ Object.keys(directives).forEach(key => {
   Vue.directive(key, directives[key])
 })
 
+import Component from '@/components'
+Vue.use(Component)
+
+// 注册过滤器
+import * as fileters from '@/filters'
+Object.keys(fileters).forEach(key => {
+  Vue.filter(key, fileters[key])
+})
+
 // set ElementUI lang to EN
 Vue.use(ElementUI)
 // 如果想要中文版 element-ui，按如下方式声明

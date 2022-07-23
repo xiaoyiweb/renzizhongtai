@@ -1,6 +1,14 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">name: {{ name }}</div>
+    <page-tools :show-before="true">
+      <span slot="before">共111条数据</span>
+      <template slot="after">
+        <el-button>添加</el-button>
+        <el-button>删除</el-button>
+      </template>
+    </page-tools>
+    <upload-excel />
   </div>
 </template>
 
