@@ -9,6 +9,8 @@
       </template>
     </page-tools>
     <upload-excel />
+
+    <imageUpload />
   </div>
 </template>
 
