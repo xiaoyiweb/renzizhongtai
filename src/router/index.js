@@ -44,9 +44,8 @@ export const constantRoutes = [
     path: '/import', component: Layout, hidden: true, children: [
       { path: '', component: () => import('@/views/import') }
     ]
-  },
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  }
+
 ]
 
 // 动态路由
@@ -64,12 +63,12 @@ export const asyncRoutes = [
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: [...constantRoutes, ...asyncRoutes]
+  routes: [...constantRoutes]
 })
 
 const router = createRouter()
 
-// Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+// 重置路由
 export function resetRouter () {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router

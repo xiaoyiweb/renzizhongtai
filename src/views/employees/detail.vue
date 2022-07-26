@@ -55,7 +55,7 @@
           <el-tab-pane label="岗位信息">
             <el-row type="flex" justify="end">
               <el-tooltip content="打印个人基本信息">
-                <router-link :to="`/employees/print/${userId}?type=personal`">
+                <router-link :to="`/employees/print/${userId}`">
                   <i class="el-icon-printer" />
                 </router-link>
               </el-tooltip>

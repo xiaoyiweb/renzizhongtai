@@ -33,7 +33,13 @@
               <el-table-column align="center" prop="description" label="描述" />
               <el-table-column align="center" label="操作">
                 <template slot-scope="{ row }">
-                  <el-button size="small" type="success">分配权限</el-button>
+                  <el-button
+                    size="small"
+                    type="success"
+                    @click="assignPerm(row.id)"
+                  >
+                    分配权限
+                  </el-button>
                   <el-button
                     size="small"
                     type="primary"
@@ -139,18 +145,52 @@
           </el-col>
         </el-row>
       </el-dialog>
+
+      <el-dialog
+        title="分配权限"
+        :visible="showRoleDialog"
+        @close="btnRoleCancel"
+      >
+        <el-tree
+          ref="permTree"
+          :data="permData"
+          :props="defaultProps"
+          show-checkbox
+          :check-strictly="true"
+          :default-expand-all="true"
+          :default-checked-keys="selectCheck"
+          node-key="id"
+        />
+
+        <!-- 底部 -->
+        <el-row slot="footer" type="flex" justify="center">
+          <el-col :span="6">
+            <el-button size="small" @click="btnRoleCancel">取消</el-button>
+            <el-button size="small" type="primary" @click="btnRoleOK">
+              确定
+            </el-button>
+          </el-col>
+        </el-row>
+      </el-dialog>
     </div>
   </div>
 </template>
 
 <script>
-import { getRoleList, getCompanyDetail, delRole, getRoleDetail, editRoleDetail, addRole } from '@/api/setting'
+import { transListToTreeData } from '@/utils'
+import { getPermissionList } from '@/api/permission'
+import { assignPrem, getRoleList, getCompanyDetail, delRole, getRoleDetail, editRoleDetail, addRole } from '@/api/setting'
 import { mapGetters } from 'vuex'
 
 export default {
 
   data () {
     return {
+      selectCheck: [],
+      roleId: null,
+      permData: [],
+      defaultProps: { label: 'name' },
+      showRoleDialog: false,
       list: [],
       page: {
         page: 1,
@@ -184,6 +224,26 @@ export default {
   },
 
   methods: {
+    btnRoleCancel () {
+      this.selectCheck = [] // 重置数据
+      this.showRoleDialog = false
+    },
+
+    async btnRoleOK () {
+      await assignPrem({ permIds: this.$refs.permTree.getCheckedKeys(), id: this.roleId })
+      this.$message.success('分配权限成功')
+      this.showRoleDialog = false
+    },
+
+    async assignPerm (id) {
+      this.permData = transListToTreeData(await getPermissionList(), '0')
+      this.roleId = id
+      const { permIds } = await getRoleDetail(id)
+      this.selectCheck = permIds // 将当前角色所拥有的权限id赋值
+
+      this.showRoleDialog = true
+    },
+
     async editRole (id) {
       this.roleForm = await getRoleDetail(id)
       this.showDialog = true

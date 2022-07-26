@@ -4,6 +4,7 @@ import PageTools from './PageTools'
 import UploadExcel from './UploadExcel'
 import imageUpload from './ImageUpload'
 import Print from 'vue-print-nb'
+import ckp from '@/mixin/checkPermission'
 
 export default {
 	install (Vue) {
@@ -11,5 +12,6 @@ export default {
 		Vue.component('UploadExcel', UploadExcel)
 		Vue.component('imageUpload', imageUpload)
 		Vue.use(Print)
+		Vue.mixin(ckp)
 	}
 }

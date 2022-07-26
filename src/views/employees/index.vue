@@ -14,7 +14,12 @@
           <el-button size="small" type="danger" @click="exportDate">
             导出
           </el-button>
-          <el-button size="small" type="primary" @click="showDialog = true">
+          <el-button
+            :disabled="!checkPermission('POINT-USER-ADD')"
+            size="small"
+            type="primary"
+            @click="showDialog = true"
+          >
             新增员工
           </el-button>
         </template>
@@ -85,7 +90,9 @@
               <el-button type="text" size="small">转正</el-button>
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
-              <el-button type="text" size="small">角色</el-button>
+              <el-button type="text" size="small" @click="assignRole(row.id)">
+                角色
+              </el-button>
               <el-button type="text" size="small" @click="delEmployee(row.id)">
                 删除
               </el-button>
@@ -117,11 +124,18 @@
           <canvas ref="myCanvas" />
         </el-row>
       </el-dialog>
+
+      <assign-role
+        ref="assignRole"
+        :show-role-dialog.sync="showRoleDialog"
+        :user-id="userId"
+      />
     </div>
   </div>
 </template>
 
  <script>
+import assignRole from '@/views/employees/components/assign-role.vue'
 import QrCode from 'qrcode'
 import { formatDate } from '@/filters'
 import addEmployee from './components/add-employee.vue'
@@ -129,11 +143,14 @@ import employeesMenu from '@/api/constant/employees'
 import { getEmployeeList, delEmployee } from '@/api/employees'
 export default {
   components: {
-    addEmployee
+    addEmployee,
+    assignRole
   },
 
   data () {
     return {
+      userId: '',
+      showRoleDialog: false,
       showCodeDialog: false,
       showDialog: false,
       loading: false,
@@ -152,6 +169,12 @@ export default {
   },
 
   methods: {
+    async assignRole (id) {
+      this.userId = id
+      await this.$refs.assignRole.getUserDeail(id) // 父组件调用子组件方法
+      this.showRoleDialog = true
+    },
+
     showQrCode (url) {
       // url存在的情况下 才弹出层
       if (url) {

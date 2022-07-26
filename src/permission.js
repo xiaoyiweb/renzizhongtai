@@ -6,7 +6,7 @@ import 'nprogress/nprogress.css' // 引入进度条样式
 
 const whiteList = ['/login', '/404']
 // 导航守卫
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
 	NProgress.start()
 	const token = store.getters.token
 	if (token) {
@@ -14,7 +14,10 @@ router.beforeEach((to, from, next) => {
 			next('/')
 		} else {
 			if (!store.getters.userId) {
-				store.dispatch('user/getUserInfoAction')
+				const { roles } = await store.dispatch('user/getUserInfoAction')
+				const routes = await store.dispatch('permission/filterRoutes', roles.menus)
+				router.addRoutes([...routes, { path: '*', redirect: '/404', hidden: true }])
+				next(to.path) // 必须这样
 			}
 			next()
 		}
