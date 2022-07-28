@@ -7,11 +7,15 @@
     />
 
     <div class="app-breadcrumb">
-      做梦赚它一个亿科技股份有限公司
+      {{ $t('compony.companyName') }}
       <span class="breadBtn">体验版</span>
     </div>
 
     <div class="right-menu">
+      <!-- 语言切换 -->
+      <lang class="item-right" />
+      <!-- 全屏 -->
+      <screen-full class="item-right" />
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img v-imagerror="defaultImg" :src="staffPhoto" class="user-avatar" />
@@ -70,6 +74,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.item-right {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 20px;
+}
 .app-breadcrumb {
   display: inline-block;
   font-size: 18px;

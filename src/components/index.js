@@ -5,6 +5,8 @@ import UploadExcel from './UploadExcel'
 import imageUpload from './ImageUpload'
 import Print from 'vue-print-nb'
 import ckp from '@/mixin/checkPermission'
+import screenFull from './ScreenFull'
+import lang from './lang'
 
 export default {
 	install (Vue) {
@@ -13,5 +15,7 @@ export default {
 		Vue.component('imageUpload', imageUpload)
 		Vue.use(Print)
 		Vue.mixin(ckp)
+		Vue.component('screenFull', screenFull)
+		Vue.component('lang', lang)
 	}
 }

@@ -5,6 +5,7 @@ export default {
 	name: 'salarys',
 	component: Layout,
 	children: [{
+		name: 'salarys',
 		path: '',
 		component: () => import('@/views/salarys'),
 		meta: { title: '工资', icon: 'money' }

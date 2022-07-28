@@ -31,8 +31,16 @@ Object.keys(fileters).forEach(key => {
   Vue.filter(key, fileters[key])
 })
 
+// echarts
+import echarts from '@/utils/charts'
+Vue.use(echarts)
+
+import i18n from '@/lang'
+
 // set ElementUI lang to EN
-Vue.use(ElementUI)
+Vue.use(ElementUI, {
+  i18n: (k, v) => i18n.t(k, v)
+})
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
 
@@ -42,5 +50,6 @@ new Vue({
   el: '#app',
   router,
   store,
+  i18n,
   render: h => h(App)
 })
